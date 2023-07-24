@@ -6,8 +6,11 @@ using StudentAPI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddGradeServicesToApiContainer(builder.Configuration);
+builder.Services.AddHttpClient<IGradeService, GradeService>(options =>
+{
+    options.BaseAddress = new Uri(builder.Configuration["GradeApiConfig:BaseUrl"]);
+});
+//builder.Services.AddGradeServicesToApiContainer(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
