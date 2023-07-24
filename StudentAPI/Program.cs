@@ -1,13 +1,13 @@
 using Polly;
 using Polly.Extensions.Http;
-
+using StudentAPI.ApiMiddleware;
 using StudentAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//builder.Services.AddGradeServicesToApiContainer(builder.Configuration);
+builder.Services.AddGradeServicesToApiContainer(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

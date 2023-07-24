@@ -7,16 +7,15 @@ namespace StudentAPI.Services
     {
         private readonly HttpClient _httpClient;
         
-        public GradeService()
+        public GradeService(HttpClient httpClient)
         {
-            
+            _httpClient = httpClient;
         }
 
         public async Task<int> GetStudentGrade(int id)
         {
-            return 1;
-            //string url = _httpClient.BaseAddress.ToString()+ Convert.ToString(id);
-            //return await _httpClient.GetFromJsonAsync<int>(url);
+            string url = _httpClient.BaseAddress.ToString()+ Convert.ToString(id);
+            return await _httpClient.GetFromJsonAsync<int>(url);
         }
     }
 }

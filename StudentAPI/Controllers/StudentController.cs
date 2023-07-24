@@ -9,16 +9,18 @@ namespace StudentAPI.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        public StudentController() {
-            
+        private readonly IGradeService _gradeService;
+        public StudentController(IGradeService gradeService)
+        {
+            _gradeService = gradeService;
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult> GetStudent(int id)
         {
-            int grade = 1;
-            //int grade = await _gradeService.GetStudentGrade(id);
+            int grade = 0;
+            grade = await _gradeService.GetStudentGrade(id);
             Student student = new Student { Id=id,FirstName="Paul",LastName="Davis",Grade=grade};
             return Ok(student);
         }
