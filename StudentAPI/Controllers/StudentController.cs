@@ -33,7 +33,15 @@ namespace StudentAPI.Controllers
 
             int grade = 0;
             //Fetch the student's grade from the Grade API
-            grade = await _gradeService.GetStudentGrade(id);
+            try
+            {
+                grade = await _gradeService.GetStudentGrade(id);
+            }
+            catch
+            {
+                //Code to log the exception
+            }
+            
             student.Grade = grade;
 
             return student;
