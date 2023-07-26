@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentAPI.Models;
 using StudentAPI.Services;
+using System.Diagnostics;
 
 namespace StudentAPI.Controllers
 {
@@ -19,10 +20,23 @@ namespace StudentAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> GetStudent(int id)
         {
-            int grade = 0;
-            grade = await _gradeService.GetStudentGrade(id);
-            Student student = new Student { Id=id,FirstName="Paul",LastName="Davis",Grade=grade};
+            var student = await GetStudentById(id);
             return Ok(student);
+        }
+
+        private async Task<Student> GetStudentById(int id)
+        {
+            //In real apps, the student details should be retrieved from the DB
+            //Hard coded for this demo
+           
+            Student student = new Student { Id = id, FirstName = "Paul", LastName = "Davis" };
+
+            int grade = 0;
+            //Fetch the student's grade from the Grade API
+            grade = await _gradeService.GetStudentGrade(id);
+            student.Grade = grade;
+
+            return student;
         }
     }
 }
