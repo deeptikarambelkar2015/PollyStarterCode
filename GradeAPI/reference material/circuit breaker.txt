@@ -12,23 +12,12 @@ namespace StudentAPI.ApiMiddleware
                                                        ConfigurationManager Configuration)
         {
 
-            services.AddHttpClient<IGradeService, GradeService>(options =>
-            {
-                options.BaseAddress = new Uri(Configuration["GradeApiConfig:BaseUrl"]);
-            })
-            .AddPolicyHandler(GetCircuitBreakerPolicy());
-            .AddPolicyHandler(GetRetryPolicy());
+            //.AddPolicyHandler(GetCircuitBreakerPolicy());
+            //.AddPolicyHandler(GetRetryPolicy());
 
 
         }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
-        {
-            return HttpPolicyExtensions
-                           .HandleTransientHttpError()
-                           .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                           .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-        }
         private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
         {
             return HttpPolicyExtensions
